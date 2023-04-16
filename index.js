@@ -1,12 +1,13 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const JWT = require("jsonwebtoken")
-
+const cors = require("cors")
 const  mongoose = require("mongoose")
 const user_routes = require("./routes/userRoutes")
 const file_upload = require("./routes/file_upload")
 const app = express()
 app.use(bodyParser.json())
+app.use(cors())
 const port = 8000
 mongoose.connect("mongodb+srv://test:test@cluster0.vcdyq8z.mongodb.net/?retryWrites=true&w=majority").then((res)=>{
        console.log("connected to db")  
@@ -14,7 +15,7 @@ mongoose.connect("mongodb+srv://test:test@cluster0.vcdyq8z.mongodb.net/?retryWri
     console.log(e)
 })
 
-app.use("/post", (req, res, next) => {
+app.use("/fileupload", (req, res, next) => {
     try {
         const token = req.headers.authorization
         if (token) {
@@ -34,10 +35,6 @@ app.use("/post", (req, res, next) => {
         })
     }
 })
-
-// app.get("/", (res, req)=>{
-//     console.log("ok")
-// })
 
 app.use("/", user_routes)
 app.use("/", file_upload)

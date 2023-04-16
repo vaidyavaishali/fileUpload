@@ -18,7 +18,7 @@ const uploader = multer({
 
 file_route.get("/fileupload", async (req, res) => {
     try {
-        const data = await uploadData.find()
+        const data = await uploadData.find({user:req.user})
         if (data) {
             res.status(200).json({
                 status: "Success",
@@ -42,23 +42,80 @@ file_route.get("/fileupload", async (req, res) => {
 
 file_route.post("/fileupload", uploader.single("file"), async (req, res) => {
     try {
-       
- const upload = await cloudinary.v2.uploader.upload(req.file.path)
-    const data = await uploadData.create({
-        file_name: req.body.file_name,
-        file:upload.secure_url
-    })
-    res.status(200).json({
-        status: "Success",
-        data
-    })
+    console.log("ok")
+        const upload = await cloudinary.v2.uploader.upload(req.file.path)
+        const data = await uploadData.create({
+            file_name: req.body.file_name,
+            file: upload.secure_url,
+            user:req.user
+        })
+        res.status(200).json({
+            status: "Success",
+            data
+        })
 
- } catch (e) {
+    } catch (e) {
         res.status(200).json({
             status: "failed",
             message: e.message
         })
     }
+})
+
+file_route.put("/fileupload/:_id", async (req, res) => {
+    try {
+        const findForUpdate = await uploadData.findOne({ _id: req.params._id })
+        if (findForUpdate) {
+            const updatedItem = await uploadData.updateOne({ _id: req.params._id }, req.body)
+            res.status(200).json({
+                status: "Success",
+                updatedItem
+            })
+
+        } else {
+            res.status(404).json({
+                status: "failed",
+                message: "ID not found"
+            })
+        }
+    }
+
+    catch (e) {
+        res.status(200).json({
+            status: "failed",
+            message: e.message
+        })
+    }
+
+
+})
+
+file_route.delete("/fileupload/:_id", async (req, res) => {
+    try {
+        const findForUpdate = await uploadData.findOne({ _id: req.params._id })
+        if (findForUpdate) {
+            const deleted = await uploadData.deleteOne()
+
+            res.status(200).json({
+                status: "Success",
+                deleted
+            })
+        } else {
+            res.status(400).json({
+                status: "Failed",
+                deleted
+            })
+        }
+    }
+    // const findForUpdate = await uploadData.findOne({ id: req.params.id })
+    catch (e) {
+        res.status(200).json({
+            status: "failed",
+            message: e.message
+        })
+    }
+
+
 })
 module.exports = file_route
 

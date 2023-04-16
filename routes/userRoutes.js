@@ -7,10 +7,11 @@ const user_routes = express.Router()
 user_routes.use(bodyParser.json())
 user_routes.post("/register", async (req, res) => {
     const { email, password } = req.body
+    console.log(req.body)
     try {
         const existingUser = await userModel.findOne({ email: email })
         if (!existingUser) {
-            bcrypt.hash(password, 10, async function (err, hash) {
+           await bcrypt.hash(password, 10, async function (err, hash) {
                 if (err) {
                     res.json({
                         status: "Failed",
@@ -48,7 +49,7 @@ user_routes.post("/login", async (req, res) => {
         const user = await userModel.findOne({ email: req.body.email })
         console.log(req.body)
         if (user) {
-            const result = bcrypt.compare(req.body.password, user.password)
+            const result = await bcrypt.compare(req.body.password, user.password)
             if (result) {
                 const token = JWT.sign({
                     exp: Math.floor(Date.now() / 1000) + 60 * 60,
