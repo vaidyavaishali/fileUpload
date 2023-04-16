@@ -1,0 +1,30 @@
+#main-home-div {
+    width: 100vw;
+    height: auto;
+    margin: 33px;
+}
+
+#header {
+    width: 50%;
+    height: 10vh;
+    background-color: rgb(13, 63, 133);
+    margin: auto;
+
+}
+
+form {
+    margin: 3% auto;
+    border: 1px solid black;
+    width: 30%;
+    height: 30vh;
+    padding:"3%"
+}
+input{
+   width: 80%;
+   height: 3vh;
+}
+label{
+    display: block;
+    text-align: left;
+    margin-left: 7%;
+}
