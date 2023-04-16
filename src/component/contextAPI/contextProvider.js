@@ -27,7 +27,9 @@ const ContextProvider = (props) => {
     }
 
     const LoginUser = () => {
+        
         axios.post("http://localhost:8000/login", login).then((res) => {
+            window.localStorage.setItem("token",res.data.token);
             FetchData()
         }).catch((e) => {
             console.log(e)
@@ -42,7 +44,7 @@ const ContextProvider = (props) => {
             }
         }
         axios.get("http://localhost:8000/fileupload", config).then((res) => {
-            // console.log(res.data.data)
+            console.log(res.data, "d")
             setData(res.data.data)
             navigate("/home")
         }).catch(e => {

@@ -5,7 +5,7 @@ import './upload.css'
 
 const HomePage = () => {
     const { data, logout } = useContext(uploadContext)
-    console.log(data, "data")
+    console.log(data.file_name, "data")
     return (
         <div id="main-home-div">
             <header id="header">
