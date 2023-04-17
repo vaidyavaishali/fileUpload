@@ -15,7 +15,7 @@ const ContextProvider = (props) => {
     const [file_name, setfile_name] = useState("")
     const navigate = useNavigate()
     const RegisterSubmit = () => {
-        axios.post("http://localhost:8000/register", reg_data).then((res) => {
+        axios.post("https://file-upload-pe8d.onrender.com/register", reg_data).then((res) => {
             console.log(res.status)
             if (res.status === 200) {
                 alert("successfully register")
@@ -29,7 +29,7 @@ const ContextProvider = (props) => {
     }
 
     const LoginUser = () => {
-        axios.post("http://localhost:8000/login", login).then((res) => {
+        axios.post("https://file-upload-pe8d.onrender.com/login", login).then((res) => {
             console.log(res.data.token)
             window.sessionStorage.setItem("token", res.data.token);
             FetchData()
@@ -47,7 +47,7 @@ const ContextProvider = (props) => {
                 authorization: token
             }
         }
-        axios.get("http://localhost:8000/fileupload", config).then((res) => {
+        axios.get("https://file-upload-pe8d.onrender.com/fileupload", config).then((res) => {
             console.log(res.data, "d")
             setData(res.data.data)
             navigate("/home")
@@ -68,7 +68,7 @@ const ContextProvider = (props) => {
                 "Content-Type": "multipart/form-data"
             }
         }
-        axios.post("http://localhost:8000/fileupload", formData, config).then((res) => {
+        axios.post("https://file-upload-pe8d.onrender.com/fileupload", formData, config).then((res) => {
             console.log("ok")
             console.log(res.status)
             if (res.status === 200) {
@@ -92,7 +92,7 @@ const ContextProvider = (props) => {
                 "Content-Type": "multipart/form-data"
             }
         }
-        axios.put(`http://localhost:8000/fileupload/${id}`, updateName, config).then(res => {
+        axios.put(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, updateName, config).then(res => {
             if (res.status === 200)
                 FetchData()
         }).catch(e => {
@@ -109,7 +109,7 @@ const ContextProvider = (props) => {
                 "Content-Type": "multipart/form-data"
             }
         }
-        axios.delete(`http://localhost:8000/fileupload/${id}`, config).then(res => {
+        axios.delete(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, config).then(res => {
             if (res.status === 200) {
                 alert("data is deleted")
                 FetchData()
