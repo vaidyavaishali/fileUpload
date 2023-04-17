@@ -18,7 +18,7 @@ const uploader = multer({
 
 file_route.get("/fileupload", async (req, res) => {
     try {
-        const data = await uploadData.find({user:req.user})
+        const data = await uploadData.find({ user: req.user })
         if (data) {
             res.status(200).json({
                 status: "Success",
@@ -37,17 +37,16 @@ file_route.get("/fileupload", async (req, res) => {
             message: e.message
         })
     }
-
 })
 
 file_route.post("/fileupload", uploader.single("file"), async (req, res) => {
     try {
-    console.log("ok")
+        // console.log("ok")
         const upload = await cloudinary.v2.uploader.upload(req.file.path)
         const data = await uploadData.create({
             file_name: req.body.file_name,
             file: upload.secure_url,
-            user:req.user
+            user: req.user
         })
         res.status(200).json({
             status: "Success",
@@ -66,7 +65,7 @@ file_route.put("/fileupload/:_id", async (req, res) => {
     try {
         const findForUpdate = await uploadData.findOne({ _id: req.params._id })
         if (findForUpdate) {
-            const updatedItem = await uploadData.updateOne({ _id: req.params._id }, req.body)
+            const updatedItem = await uploadData.updateOne({ _id: req.params._id }, { $set: {file_name: req.body.file_name}})
             res.status(200).json({
                 status: "Success",
                 updatedItem
@@ -94,7 +93,7 @@ file_route.delete("/fileupload/:_id", async (req, res) => {
     try {
         const findForUpdate = await uploadData.findOne({ _id: req.params._id })
         if (findForUpdate) {
-            const deleted = await uploadData.deleteOne()
+            const deleted = await uploadData.deleteOne({ _id: req.params._id })
 
             res.status(200).json({
                 status: "Success",
@@ -107,7 +106,6 @@ file_route.delete("/fileupload/:_id", async (req, res) => {
             })
         }
     }
-    // const findForUpdate = await uploadData.findOne({ id: req.params.id })
     catch (e) {
         res.status(200).json({
             status: "failed",

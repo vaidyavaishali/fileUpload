@@ -53,7 +53,7 @@ user_routes.post("/login", async (req, res) => {
             if (result) {
                 const token = JWT.sign({
                     exp: Math.floor(Date.now() / 1000) + 60 * 60,
-                    data: user._id
+                    data: user.id
                 }, "Auth")
                 res.status(200).json({
                     status: "Success",
