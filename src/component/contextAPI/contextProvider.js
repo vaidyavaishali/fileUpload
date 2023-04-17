@@ -132,7 +132,7 @@ const ContextProvider = (props) => {
     return (
 
         <>
-            <uploadContext.Provider value={{ login, setLogin, setReg_data, data, reg_data, RegisterSubmit, confirm, setConfirm, LoginUser, logout, Create, FetchData, setfile, setfile_name, DeleteData, Update, setId , id}}>
+            <uploadContext.Provider value={{ login, setLogin, setReg_data, data, reg_data, RegisterSubmit, confirm, setConfirm, LoginUser, logout, Create, FetchData, setfile, setfile_name, DeleteData, Update, setId , id, setUpdateName}}>
                 {props.children}
             </uploadContext.Provider>
         </>

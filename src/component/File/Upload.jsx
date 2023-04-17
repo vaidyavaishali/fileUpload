@@ -4,10 +4,6 @@ import uploadContext from "../contextAPI/context"
 
 const Upload = () => {
     const { Create, setfile, setfile_name, logout } = useContext(uploadContext)
-    // const UploadFile = (e)=>{
-    //     // e.preventDefault()
-    //     Create()
-    // }
     return (
         <>
             <div>
