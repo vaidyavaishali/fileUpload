@@ -7,7 +7,7 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap"
 import './upload.css'
 
 const HomePage = () => {
-    const { data, logout, DeleteData, Update, setId, id, setUpdateName } = useContext(uploadContext)
+    const { data, logout, DeleteData, Update, setId, setUpdateName } = useContext(uploadContext)
     const [modal, setmodal] = useState(false)
 
     console.log(data, "data")
@@ -35,7 +35,7 @@ const HomePage = () => {
                         </div>
                         <div id="sub-cancel">
                             <button className='cancel' onClick={() => { setmodal(!modal) }}>Cancel</button>
-                            <button className='submit' onClick={Update(id)}>Submit</button>
+                            <button className='submit' onClick={()=>{{Update(); setmodal(false)}}}>Submit</button>
                         </div>
                     </fieldset>
                 </ModalBody>

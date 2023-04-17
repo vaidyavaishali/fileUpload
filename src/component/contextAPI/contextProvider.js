@@ -84,7 +84,7 @@ const ContextProvider = (props) => {
         })
     }
 
-    const Update = (id) => {
+    const Update = () => {
         const token = window.sessionStorage.getItem('token')
         const config = {
             headers: {
@@ -92,7 +92,7 @@ const ContextProvider = (props) => {
                 "Content-Type": "multipart/form-data"
             }
         }
-        axios.put(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, updateName, config).then(res => {
+        axios.put(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, {file_name: updateName}, config).then(res => {
             if (res.status === 200)
                 FetchData()
         }).catch(e => {
