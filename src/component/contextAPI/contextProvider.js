@@ -89,7 +89,6 @@ const ContextProvider = (props) => {
         const config = {
             headers: {
                 authorization: token,
-                "Content-Type": "multipart/form-data"
             }
         }
         axios.put(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, {file_name: updateName}, config).then(res => {
@@ -106,7 +105,6 @@ const ContextProvider = (props) => {
         const config = {
             headers: {
                 authorization: token,
-                "Content-Type": "multipart/form-data"
             }
         }
         axios.delete(`https://file-upload-pe8d.onrender.com/fileupload/${id}`, config).then(res => {

@@ -10,7 +10,7 @@ const HomePage = () => {
     const { data, logout, DeleteData, Update, setId, setUpdateName } = useContext(uploadContext)
     const [modal, setmodal] = useState(false)
 
-    console.log(data, "data")
+    // console.log(data, "data")
     return (
         <div id="main-home-div">
             <header id="header">
@@ -35,7 +35,7 @@ const HomePage = () => {
                         </div>
                         <div id="sub-cancel">
                             <button className='cancel' onClick={() => { setmodal(!modal) }}>Cancel</button>
-                            <button className='submit' onClick={()=>{{Update(); setmodal(false)}}}>Submit</button>
+                            <button className='submit' onClick={()=>{Update(); setmodal(false)}}>update</button>
                         </div>
                     </fieldset>
                 </ModalBody>
