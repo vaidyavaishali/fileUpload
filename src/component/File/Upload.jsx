@@ -13,7 +13,7 @@ const Upload = () => {
             <div>
                 <header id="header">
                     <h2>File Upload App</h2>
-                    <h4 onClick={logout}>Logout</h4>
+                    <h4 onClick={logout} style={{ textAlign: "right", marginRight: "10%" }}>Logout</h4>
                     <Link to="/upload"><button>Add more</button></Link>
                 </header>
                 <form onSubmit={Create}>
