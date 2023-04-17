@@ -8,11 +8,13 @@ const ContextProvider = (props) => {
     const [login, setLogin] = useState({ email: "", password: "" })
     const [reg_data, setReg_data] = useState({ email: "", password: "" })
     const [confirm, setConfirm] = useState("")
+    const [updateName, setUpdateName] = useState("")
     const [data, setData] = useState([])
-    const [uploadData, setUploadData] = useState({ file_name: "", file: "" })
+    const [file, setfile] = useState("")
+    const [id, setId] = useState("")
+    const [file_name, setfile_name] = useState("")
     const navigate = useNavigate()
     const RegisterSubmit = () => {
-        // console.log("ok")
         axios.post("http://localhost:8000/register", reg_data).then((res) => {
             console.log(res.status)
             if (res.status === 200) {
@@ -27,10 +29,11 @@ const ContextProvider = (props) => {
     }
 
     const LoginUser = () => {
-        
         axios.post("http://localhost:8000/login", login).then((res) => {
-            window.localStorage.setItem("token",res.data.token);
+            console.log(res.data.token)
+            window.sessionStorage.setItem("token", res.data.token);
             FetchData()
+            alert("login Successfully..!!")
         }).catch((e) => {
             console.log(e)
         })
@@ -38,6 +41,7 @@ const ContextProvider = (props) => {
 
     const FetchData = () => {
         const token = window.sessionStorage.getItem("token")
+        console.log(token)
         const config = {
             headers: {
                 authorization: token
@@ -54,32 +58,71 @@ const ContextProvider = (props) => {
 
     const Create = (e) => {
         e.preventDefault()
-        try {
-            let formData = new FormData()
-            formData.append({ file_name: "file_name" })
-            formData.append({ file: "file" })
-            const token = window.localStorage.getItem('token')
-            const config = {
-                headers: {
-                    authorization: token,
-                    "Content-Type": "multipart/form-data"
-                }
+        let formData = new FormData()
+        formData.append("file_name", file_name)
+        formData.append("file", file)
+        const token = window.sessionStorage.getItem('token')
+        const config = {
+            headers: {
+                authorization: token,
+                "Content-Type": "multipart/form-data"
             }
-            axios.post("http://localhost:8000/fileupload", uploadData, config).then((res) => {
-                console.log("ok")
-                if(res.status === 200){
-                    alert("data added")
-                    FetchData()
-                }
-               
-            }).catch(e => {
-                console.log(e)
-            })
-        } catch (e) {
-
         }
+        axios.post("http://localhost:8000/fileupload", formData, config).then((res) => {
+            console.log("ok")
+            console.log(res.status)
+            if (res.status === 200) {
+                alert("data added")
+                FetchData()
+                // navigate("/home")
+            } else {
+                console.log("not ok")
+            }
+
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+
+    const Update = (id) => {
+        const token = window.sessionStorage.getItem('token')
+        const config = {
+            headers: {
+                authorization: token,
+                "Content-Type": "multipart/form-data"
+            }
+        }
+        axios.put(`http://localhost:8000/fileupload/${id}`, updateName, config).then(res => {
+            if (res.status === 200)
+                FetchData()
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+
+
+    const DeleteData = (id) => {
+        const token = window.sessionStorage.getItem('token')
+        const config = {
+            headers: {
+                authorization: token,
+                "Content-Type": "multipart/form-data"
+            }
+        }
+        axios.delete(`http://localhost:8000/fileupload/${id}`, config).then(res => {
+            if (res.status === 200) {
+                alert("data is deleted")
+                FetchData()
+            } else {
+                alert("invalid response")
+            }
+        }).catch(e => {
+            console.log(e)
+        })
 
     }
+
+
 
     const logout = () => {
         window.sessionStorage.removeItem("token")
@@ -89,7 +132,7 @@ const ContextProvider = (props) => {
     return (
 
         <>
-            <uploadContext.Provider value={{ login, setLogin, setReg_data, data, uploadData, setUploadData, reg_data, RegisterSubmit, confirm, setConfirm, LoginUser, logout, Create, FetchData }}>
+            <uploadContext.Provider value={{ login, setLogin, setReg_data, data, reg_data, RegisterSubmit, confirm, setConfirm, LoginUser, logout, Create, FetchData, setfile, setfile_name, DeleteData, Update, setId , id}}>
                 {props.children}
             </uploadContext.Provider>
         </>
