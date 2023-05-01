@@ -34,8 +34,8 @@ const HomePage = () => {
                             <input type='text' onChange={(e)=>{setUpdateName(e.target.value)}}/>
                         </div>
                         <div id="sub-cancel">
-                            <button className='cancel' onClick={() => { setmodal(!modal) }}>Cancel</button>
-                            <button className='submit' onClick={()=>{Update(); setmodal(false)}}>update</button>
+                            <button className='cancel btn btn-success' onClick={() => { setmodal(!modal) }}>Cancel</button>
+                            <button className='submit btn btn-primary' onClick={()=>{Update(); setmodal(false)}}>update</button>
                         </div>
                     </fieldset>
                 </ModalBody>

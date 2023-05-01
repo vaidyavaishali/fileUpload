@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import uploadContext from "../contextAPI/context"
 import { Link } from "react-router-dom"
+import "../Login/login.css"
 const Register = () => {
     const { reg_data, setReg_data, RegisterSubmit, confirm, setConfirm  } = useContext(uploadContext)
 
